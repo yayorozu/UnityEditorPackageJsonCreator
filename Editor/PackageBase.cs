@@ -8,20 +8,17 @@ namespace Yorozu.EditorTools.PackageJson
 	[Serializable]
 	internal abstract class PackageBase<T>
 	{
-		[SerializeField]
-		internal PackageData Data;
-
-		[SerializeField]
-		protected List<T> list = new List<T>();
-
-		internal List<T> List => List;
+		internal abstract IEnumerable<T> Stream { get; }
 
 		private static GUIContent plus;
 		private static GUIContent minus;
 		private static GUIStyle button;
 		private static GUILayoutOption width;
 
-		internal void OnGUI()
+		protected abstract int Length { get; }
+
+
+		internal void OnGUI(PackageJsonCreateWindow window)
 		{
 			if (plus == null)
 				plus = EditorGUIUtility.TrIconContent("Toolbar Plus");
@@ -37,17 +34,16 @@ namespace Yorozu.EditorTools.PackageJson
 				EditorGUILayout.LabelField(LabelName());
 				GUILayout.FlexibleSpace();
 				if (GUILayout.Button(plus, button, width))
-					list.Add(NewT());
+					Add();
 			}
 
-			if (list.Count <= 0)
+			if (Length <= 0)
 				return;
 
 			using (new EditorGUILayout.VerticalScope("box"))
 			{
-				for (var i = 0; i < list.Count; i++)
+				for (var i = 0; i < Length; i++)
 				{
-
 					using (new EditorGUILayout.VerticalScope("box"))
 					{
 						using (new GUILayout.HorizontalScope())
@@ -55,11 +51,11 @@ namespace Yorozu.EditorTools.PackageJson
 							EditorGUILayout.LabelField(i.ToString(), width);
 							using (new EditorGUILayout.VerticalScope())
 							{
-								DrawElement(i);
+								DrawElement(i, window);
 							}
 							if (GUILayout.Button("x", button, width))
 							{
-								list.RemoveAt(i);
+								Remove(i);
 								GUIUtility.ExitGUI();
 							}
 						}
@@ -69,9 +65,8 @@ namespace Yorozu.EditorTools.PackageJson
 		}
 
 		protected abstract string LabelName();
-
-		protected abstract void DrawElement(int index);
-
-		protected abstract T NewT();
+		protected abstract void DrawElement(int index, PackageJsonCreateWindow window);
+		protected abstract void Remove(int index);
+		protected abstract void Add();
 	}
 }

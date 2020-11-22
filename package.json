@@ -1,0 +1,15 @@
+{
+  "name": "yorozu.tool.package-json-creator",
+  "version": "0.0.1",
+  "displayName": "PackageJsonCreater",
+  "description": "package.json を作成するツール",
+  "author": {
+    "name": "Yorozu",
+    "email": "hatch.tech.eng@gmail.com",
+    "url": "https://github.com/yayorozu"
+  },
+  "keywords": [
+    "tool",
+    "json"
+  ]
+}
