@@ -1,7 +1,7 @@
 {
   "name": "yorozu.tool.package-json-creator",
   "version": "0.0.1",
-  "displayName": "PackageJsonCreater",
+  "displayName": "PackageJsonCreator",
   "description": "package.json を作成するツール",
   "author": {
     "name": "Yorozu",
